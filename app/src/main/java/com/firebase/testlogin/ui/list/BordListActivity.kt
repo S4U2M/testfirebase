@@ -4,25 +4,47 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.firebase.testlogin.data.model.local.TemplateEntity
 import com.firebase.testlogin.databinding.BordListActivityBinding
 import com.firebase.testlogin.ui.write.BordWriteActivity
 import com.firebase.testlogin.ui.Model
 import com.firebase.testlogin.data.model.remote.FireModel
 import com.firebase.testlogin.ui.list.adapter.MyListAdapter
+import com.firebase.testlogin.ui.list.adapter.TemplateAdapter
 import com.firebase.testlogin.ui.write.BordWriteActivity.Companion.EXTRA_WRITE_TYPE
 import com.firebase.testlogin.ui.write.WriteType
+import com.firebase.testlogin.unit.Unit.currentTemplate
 
 class BordListActivity : AppCompatActivity() {
 
     private lateinit var binding: BordListActivityBinding
-    private val adapter by lazy {
+
+    private val listAdapter by lazy {
         MyListAdapter(
             onItemClicked = { item ->
 
                 alterDialog(item)
 
+            }
+        )
+    }
+
+    private val templateAdapter by lazy {
+        TemplateAdapter(
+            onItemClicked = { template ->
+                currentTemplate = template.id.toString()
+
+                Toast.makeText(
+                    this@BordListActivity,
+                    "name : ${template.title} id: $currentTemplate",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            onLongItemClicked = { template ->
+                deleteFromRoom(template)
             }
         )
     }
@@ -41,7 +63,8 @@ class BordListActivity : AppCompatActivity() {
 
     private fun initView() = with(binding) {
 
-        writeList.adapter = adapter
+        templateList.adapter = templateAdapter
+        writeList.adapter = listAdapter
 
         writeBtn.setOnClickListener {
             val intent = Intent(this@BordListActivity, BordWriteActivity::class.java).apply {
@@ -68,7 +91,11 @@ class BordListActivity : AppCompatActivity() {
 
         with(viewModel) {
             liveModelList.observe(this@BordListActivity, Observer { newData ->
-                adapter.submitList(newData)
+                listAdapter.submitList(newData)
+            })
+
+            liveTemplateList.observe(this@BordListActivity, Observer { newData ->
+                templateAdapter.submitList(newData)
             })
         }
 
@@ -90,6 +117,10 @@ class BordListActivity : AppCompatActivity() {
 
     private fun deleteClicked(item: FireModel) = with(viewModel) {
         delete(item)
+    }
+
+    private fun deleteFromRoom(item: TemplateEntity) = with(viewModel) {
+        deleteFromRoom(item)
     }
 
 

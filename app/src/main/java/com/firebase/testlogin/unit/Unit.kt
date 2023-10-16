@@ -5,5 +5,6 @@ import com.google.firebase.ktx.Firebase
 
 object Unit {
 
+    var currentTemplate: String = ""
 
 }

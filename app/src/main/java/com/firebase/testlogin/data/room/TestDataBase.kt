@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.firebase.testlogin.data.model.local.TestEntity
+import com.firebase.testlogin.data.model.local.TemplateEntity
 
-@Database(entities = [TestEntity::class], version = 1)
+@Database(entities = [TemplateEntity::class], version = 2)
 abstract class TestDataBase : RoomDatabase() {
     abstract fun testDao(): TestDao
 

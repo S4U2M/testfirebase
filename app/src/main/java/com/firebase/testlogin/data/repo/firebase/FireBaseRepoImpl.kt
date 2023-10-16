@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.firebase.testlogin.ui.Model
 import com.firebase.testlogin.data.model.remote.FireModel
+import com.firebase.testlogin.unit.Unit.currentTemplate
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -14,12 +16,12 @@ class FireBaseRepoImpl(
 
 ) : FireBaseRepo {
 
-    override fun getData(): LiveData<List<FireModel>> {
+    override fun getDataFromTemplate(user: String): LiveData<List<FireModel>> {
 
         val resultLiveData = MutableLiveData<List<FireModel>>()
 
         val database = Firebase.database
-        val myRef = database.getReference("borad")
+        val myRef = database.getReference("$user/$currentTemplate/title")
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -56,19 +58,25 @@ class FireBaseRepoImpl(
         return resultLiveData
     }
 
-    override fun deleteItem(item: FireModel) {
+    override fun deleteItem(user: String,item: FireModel) {
         val database = Firebase.database
-        val myRef = database.getReference("borad")
+        val myRef = database.getReference("$user/$currentTemplate/title")
         myRef.child(item.key).removeValue()
     }
 
-    override fun addItem(title: String) {
+    override fun addItem(user: String, title: String) {
         val database = Firebase.database
-        val myRef = database.getReference("borad")
+        val myRef = database.getReference("$user/$currentTemplate")
 
-        myRef.push().setValue(
+        myRef.child("title").push().setValue(
             Model(title = title)
         )
     }
+
+    override fun getUser(): String {
+        val user = FirebaseAuth.getInstance().currentUser
+        return user?.uid ?: ""
+    }
+
 
 }

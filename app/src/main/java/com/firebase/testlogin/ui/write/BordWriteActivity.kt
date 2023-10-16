@@ -31,11 +31,9 @@ class BordWriteActivity : AppCompatActivity() {
     }
 
     private fun initView() = with(binding) {
-
         btnComplite.setOnClickListener {
 
             val text = writeDescription.text.toString()
-
 
             when (writeType) {
                 WriteType.ADD -> {
@@ -43,25 +41,18 @@ class BordWriteActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    //템플릿 추가
+                    insertTemplateToRoom(text)
                 }
 
             }
-
-
-
-
-
             finish()
-
         }
-
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(
             this@BordWriteActivity,
-            WriteViewModelFactory()
+            WriteViewModelFactory(this@BordWriteActivity)
         )[WriteViewModel::class.java]
 
         with(viewModel) {
@@ -72,7 +63,11 @@ class BordWriteActivity : AppCompatActivity() {
     }
 
     private fun addItem(title: String) = with(viewModel) {
-        addItem(title)
+        addItemToFireBase(title)
+    }
+
+    private fun insertTemplateToRoom(title: String) = with(viewModel) {
+        insertTemplateToRoom(title)
     }
 
 }

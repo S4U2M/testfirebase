@@ -7,9 +7,10 @@
     tools:context=".ui.list.BordListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/room_list"
+        android:id="@+id/template_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/write_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +22,7 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/room_list" />
+        app:layout_constraintTop_toBottomOf="@id/template_list" />
 
     <Button
         android:id="@+id/write_btn"
