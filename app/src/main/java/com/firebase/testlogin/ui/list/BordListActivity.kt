@@ -50,7 +50,7 @@ class BordListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        templateBtn.setOnClickListener{
+        templateBtn.setOnClickListener {
             val intent = Intent(this@BordListActivity, BordWriteActivity::class.java).apply {
                 putExtra(EXTRA_WRITE_TYPE, WriteType.TEMPLATE.name)
             }
@@ -63,7 +63,7 @@ class BordListActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(
             this@BordListActivity,
-            ListViewModelFactory()
+            ListViewModelFactory(this@BordListActivity)
         )[ListViewModel::class.java]
 
         with(viewModel) {
