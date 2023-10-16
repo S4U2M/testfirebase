@@ -4,13 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import com.firebase.testlogin.data.repo.FireBaseRepo
 import com.firebase.testlogin.databinding.BordWriteActivityBinding
-import com.firebase.testlogin.ui.Model
-import com.firebase.testlogin.ui.list.ListViewModel
-import com.firebase.testlogin.ui.list.ListViewModelFactory
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 class BordWriteActivity : AppCompatActivity() {
 

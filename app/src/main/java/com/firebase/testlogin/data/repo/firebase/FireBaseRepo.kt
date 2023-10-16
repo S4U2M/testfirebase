@@ -1,4 +1,4 @@
-package com.firebase.testlogin.data.repo
+package com.firebase.testlogin.data.repo.firebase
 
 import androidx.lifecycle.LiveData
 import com.firebase.testlogin.data.model.remote.FireModel

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.testlogin.data.model.remote.FireModel
-import com.firebase.testlogin.data.repo.FireBaseRepo
-import com.firebase.testlogin.data.repo.FireBaseRepoImpl
+import com.firebase.testlogin.data.repo.firebase.FireBaseRepo
+import com.firebase.testlogin.data.repo.firebase.FireBaseRepoImpl
 
 class ListViewModel(
     private val repo: FireBaseRepo

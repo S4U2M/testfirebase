@@ -2,9 +2,8 @@ package com.firebase.testlogin.ui.write
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.firebase.testlogin.data.repo.FireBaseRepo
-import com.firebase.testlogin.data.repo.FireBaseRepoImpl
-import com.firebase.testlogin.ui.list.ListViewModel
+import com.firebase.testlogin.data.repo.firebase.FireBaseRepo
+import com.firebase.testlogin.data.repo.firebase.FireBaseRepoImpl
 
 class WriteViewModel(
     private val repo: FireBaseRepo
