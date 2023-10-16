@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "811951697439",
+    "firebase_url": "https://nbcamp-account-book-default-rtdb.firebaseio.com",
+    "project_id": "nbcamp-account-book",
+    "storage_bucket": "nbcamp-account-book.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811951697439:android:a0b4c01cec7f80cedcef2a",
+        "android_client_info": {
+          "package_name": "com.firebase.testlogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811951697439-5bkrhteepvoi27ihbrtua0b7jqhjie24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.firebase.testlogin",
+            "certificate_hash": "f118a4006f0710654bc2d6561ed87f33e3a0088e"
+          }
+        },
+        {
+          "client_id": "811951697439-3jag4338nucom72sjn6j4dn9lqn8pcpb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3g_htpGO38BLjuVeH_ycRg9qNoxIFYsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811951697439-3jag4338nucom72sjn6j4dn9lqn8pcpb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
