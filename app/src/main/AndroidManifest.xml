@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Testlogin"
         tools:targetApi="31">
         <activity
-            android:name=".ui.BordWriteActivity"
+            android:name=".ui.write.BordWriteActivity"
             android:exported="false" />
         <activity
             android:name=".ui.list.BordListActivity"

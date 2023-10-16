@@ -7,9 +7,12 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.testlogin.databinding.BordListActivityBinding
-import com.firebase.testlogin.ui.BordWriteActivity
+import com.firebase.testlogin.ui.write.BordWriteActivity
 import com.firebase.testlogin.ui.Model
-import com.firebase.testlogin.data.remote.FireModel
+import com.firebase.testlogin.data.model.remote.FireModel
+import com.firebase.testlogin.ui.list.adapter.MyListAdapter
+import com.firebase.testlogin.ui.write.BordWriteActivity.Companion.EXTRA_WRITE_TYPE
+import com.firebase.testlogin.ui.write.WriteType
 
 class BordListActivity : AppCompatActivity() {
 
@@ -41,9 +44,19 @@ class BordListActivity : AppCompatActivity() {
         writeList.adapter = adapter
 
         writeBtn.setOnClickListener {
-            val intent = Intent(this@BordListActivity, BordWriteActivity::class.java)
+            val intent = Intent(this@BordListActivity, BordWriteActivity::class.java).apply {
+                putExtra(EXTRA_WRITE_TYPE, WriteType.ADD.name)
+            }
             startActivity(intent)
         }
+
+        templateBtn.setOnClickListener{
+            val intent = Intent(this@BordListActivity, BordWriteActivity::class.java).apply {
+                putExtra(EXTRA_WRITE_TYPE, WriteType.TEMPLATE.name)
+            }
+            startActivity(intent)
+        }
+
 
     }
 

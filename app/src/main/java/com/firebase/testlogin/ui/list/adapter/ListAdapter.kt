@@ -1,4 +1,4 @@
-package com.firebase.testlogin.ui.list
+package com.firebase.testlogin.ui.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.testlogin.databinding.ItemBinding
-import com.firebase.testlogin.data.remote.FireModel
+import com.firebase.testlogin.data.model.remote.FireModel
 
 class MyListAdapter(
     private val onItemClicked:(FireModel) -> Unit

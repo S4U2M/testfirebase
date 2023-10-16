@@ -1,4 +1,4 @@
-package com.firebase.testlogin.data.remote
+package com.firebase.testlogin.data.model.remote
 
 data class FireModel(
     val key: String,
