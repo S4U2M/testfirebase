@@ -5,10 +5,9 @@ import com.firebase.testlogin.data.model.remote.FireModel
 
 interface FireBaseRepo {
 
-    fun getDataFromTemplate(template: String, user: String): LiveData<List<FireModel>>
-    fun getAllData(user: String): LiveData<List<FireModel>>
-    fun deleteItem(template: String, user: String, item: FireModel)
-    fun addItem(template: String, user: String, title: String)
+    suspend fun getDataFromTemplate(template: String, user: String): List<FireModel>
+    suspend fun deleteItem(template: String, user: String, item: FireModel): List<FireModel>
+    suspend fun addItem(template: String, user: String, title: String): List<FireModel>
     fun getUser(): String
 
 }

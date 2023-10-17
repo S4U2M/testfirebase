@@ -1,6 +1,7 @@
 package com.firebase.testlogin.ui.list
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -66,6 +67,12 @@ class BordListActivity : AppCompatActivity() {
         initViewModel()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        updateResume(currentTemplate)
+    }
+
     private fun initView() = with(binding) {
 
         templateList.adapter = templateAdapter
@@ -97,9 +104,12 @@ class BordListActivity : AppCompatActivity() {
 
         with(viewModel) {
             liveModelList.observe(this@BordListActivity, Observer { newData ->
-                listAdapter.submitList(newData)
+                if (newData != null) {
+                    listAdapter.submitList(newData)
 
-                Log.d("템플릿.observe", newData.toString())
+                    Log.d("템플릿.observe", newData.toString())
+                }
+
             })
 
             liveTemplateList.observe(this@BordListActivity, Observer { newData ->
@@ -114,7 +124,7 @@ class BordListActivity : AppCompatActivity() {
         builder.setTitle("삭제")
         builder.setMessage("${item.title}을(를) 삭제 할까요?")
         builder.setNegativeButton("예") { _, _ ->
-            deleteClicked(currentTemplate,item)
+            deleteClicked(currentTemplate, item)
         }
         builder.setPositiveButton("아니오") { dialog, _ ->
             dialog.dismiss()
@@ -123,16 +133,20 @@ class BordListActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun deleteClicked(template:String,item: FireModel) = with(viewModel) {
-        delete(template,item)
+    private fun deleteClicked(template: String, item: FireModel) = with(viewModel) {
+        delete(template, item)
     }
 
     private fun deleteFromRoom(item: TemplateEntity) = with(viewModel) {
         deleteFromRoom(item)
     }
 
-    private fun updateFireBase(template:String) = with(viewModel) {
+    private fun updateFireBase(template: String) = with(viewModel) {
         updateModelList(template)
+    }
+
+    private fun updateResume(template: String) = with(viewModel) {
+        updateModelList(currentTemplate)
     }
 
 

@@ -12,109 +12,128 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 
-class FireBaseRepoImpl(
+class FireBaseRepoImpl() : FireBaseRepo {
 
-) : FireBaseRepo {
-
-    override fun getDataFromTemplate(template:String,user: String): LiveData<List<FireModel>> {
-
-        val resultLiveData = MutableLiveData<List<FireModel>>()
-
+    override suspend fun getDataFromTemplate(template: String, user: String): List<FireModel> {
         val database = Firebase.database
-        val myRef = database.getReference("$user/$template/title")
-        Log.d("템플릿.repo", "$user/$template/title")
 
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        try {
+            val snapshot = database.getReference("$user/$template/title").get().await()
+            Log.d("템플릿.repo", "$user/$template/title")
 
+            if (snapshot.exists()) {
                 val dataList = mutableListOf<FireModel>()
 
-                if (snapshot.exists()) {
-                    for (userSnapshot in snapshot.children) {
-                        val itemKey = userSnapshot.key ?: ""
-                        val getData = userSnapshot.getValue(Model::class.java)
+                for (userSnapshot in snapshot.children) {
+                    val itemKey = userSnapshot.key ?: ""
+                    val getData = userSnapshot.getValue(Model::class.java)
 
-                        getData?.let { model ->
+                    getData?.let { model ->
 
-                            val fireModel =
-                                FireModel(
-                                    key = itemKey,
-                                    title = model.title
-                                )
+                        val fireModel =
+                            FireModel(
+                                key = itemKey,
+                                title = model.title
+                            )
 
-                            dataList.add(fireModel)
-                        }
+                        dataList.add(fireModel)
                     }
-
-                    resultLiveData.postValue(dataList)
-                    Log.d("템플릿.dataList", dataList.toString())
                 }
+                return dataList
+            } else {
+                return emptyList()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                // 데이터베이스 작업이 실패한 경우 처리
-            }
-        })
-        Log.d("템플릿.resultData", resultLiveData.value.toString())
-        return resultLiveData
-
+        } catch (e: Exception) {
+            // 여기서 예외 처리 코드를 작성합니다.
+            Log.e("템플릿.repo", "데이터 가져오기 중 오류 발생: ${e.message}")
+            return emptyList() // 또는 예외 처리에 따른 적절한 반환 값 설정
+        }
     }
 
-    override fun getAllData(user: String): LiveData<List<FireModel>> {
-        val resultLiveData = MutableLiveData<List<FireModel>>()
-
-        val database = Firebase.database
-        val myRef = database.getReference("$user/tempalate1-16/title")
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                val dataList = mutableListOf<FireModel>()
-
-                if (snapshot.exists()) {
-                    for (userSnapshot in snapshot.children) {
-                        val itemKey = userSnapshot.key ?: ""
-                        val getData = userSnapshot.getValue(Model::class.java)
-
-                        getData?.let { model ->
-
-                            val fireModel =
-                                FireModel(
-                                    key = itemKey,
-                                    title = model.title
-                                )
-
-                            dataList.add(fireModel)
-                        }
-                    }
-
-                    resultLiveData.postValue(dataList)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // 데이터베이스 작업이 실패한 경우 처리
-            }
-        })
-        Log.d("템플릿.resultData", resultLiveData.value.toString())
-        return resultLiveData
-    }
-
-
-    override fun deleteItem(template: String,user: String,item: FireModel) {
+    override suspend fun deleteItem(
+        template: String,
+        user: String,
+        item: FireModel
+    ): List<FireModel> {
         val database = Firebase.database
         val myRef = database.getReference("$user/$template/title")
         myRef.child(item.key).removeValue()
+
+        try {
+            val snapshot = database.getReference("$user/$template/title").get().await()
+            Log.d("템플릿.repo", "$user/$template/title")
+
+            if (snapshot.exists()) {
+                val dataList = mutableListOf<FireModel>()
+
+                for (userSnapshot in snapshot.children) {
+                    val itemKey = userSnapshot.key ?: ""
+                    val getData = userSnapshot.getValue(Model::class.java)
+
+                    getData?.let { model ->
+
+                        val fireModel =
+                            FireModel(
+                                key = itemKey,
+                                title = model.title
+                            )
+
+                        dataList.add(fireModel)
+                    }
+                }
+                return dataList
+            } else {
+                return emptyList()
+            }
+        } catch (e: Exception) {
+            // 여기서 예외 처리 코드를 작성합니다.
+            Log.e("템플릿.repo", "데이터 가져오기 중 오류 발생: ${e.message}")
+            return emptyList() // 또는 예외 처리에 따른 적절한 반환 값 설정
+        }
     }
 
-    override fun addItem(template: String,user: String, title: String) {
+    override suspend fun addItem(template: String, user: String, title: String): List<FireModel> {
         val database = Firebase.database
         val myRef = database.getReference("$user/$template/title")
 
         myRef.push().setValue(
             Model(title = title)
         )
+
+        try {
+            val snapshot = database.getReference("$user/$template/title").get().await()
+            Log.d("템플릿.repo", "$user/$template/title")
+
+            if (snapshot.exists()) {
+                val dataList = mutableListOf<FireModel>()
+
+                for (userSnapshot in snapshot.children) {
+                    val itemKey = userSnapshot.key ?: ""
+                    val getData = userSnapshot.getValue(Model::class.java)
+
+                    getData?.let { model ->
+
+                        val fireModel =
+                            FireModel(
+                                key = itemKey,
+                                title = model.title
+                            )
+
+                        dataList.add(fireModel)
+                    }
+                }
+                return dataList
+            } else {
+                return emptyList()
+            }
+        } catch (e: Exception) {
+            // 여기서 예외 처리 코드를 작성합니다.
+            Log.e("템플릿.repo", "데이터 가져오기 중 오류 발생: ${e.message}")
+            return emptyList() // 또는 예외 처리에 따른 적절한 반환 값 설정
+        }
     }
 
     override fun getUser(): String {

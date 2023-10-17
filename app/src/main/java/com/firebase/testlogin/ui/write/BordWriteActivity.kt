@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.testlogin.databinding.BordWriteActivityBinding
+import com.firebase.testlogin.ui.list.ListViewModel
 import com.firebase.testlogin.unit.Unit.currentTemplate
 
 class BordWriteActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class BordWriteActivity : AppCompatActivity() {
     }
 
     private lateinit var viewModel: WriteViewModel
+
+    private lateinit var listViewModel : ListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
