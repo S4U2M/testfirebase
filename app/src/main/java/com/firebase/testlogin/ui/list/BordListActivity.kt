@@ -35,11 +35,12 @@ class BordListActivity : AppCompatActivity() {
     private val templateAdapter by lazy {
         TemplateAdapter(
             onItemClicked = { template ->
-                currentTemplate = template.id.toString()
+                currentTemplate = "${template.title}-${template.id.toString()}"
+                updateFireBase(currentTemplate)
 
                 Toast.makeText(
                     this@BordListActivity,
-                    "name : ${template.title} id: $currentTemplate",
+                    "$currentTemplate",
                     Toast.LENGTH_SHORT
                 ).show()
             },
@@ -50,6 +51,8 @@ class BordListActivity : AppCompatActivity() {
     }
 
     private lateinit var viewModel: ListViewModel
+
+
     val list = mutableListOf<Model>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +92,7 @@ class BordListActivity : AppCompatActivity() {
             ListViewModelFactory(this@BordListActivity)
         )[ListViewModel::class.java]
 
+
         with(viewModel) {
             liveModelList.observe(this@BordListActivity, Observer { newData ->
                 listAdapter.submitList(newData)
@@ -106,7 +110,7 @@ class BordListActivity : AppCompatActivity() {
         builder.setTitle("삭제")
         builder.setMessage("${item.title}을(를) 삭제 할까요?")
         builder.setNegativeButton("예") { _, _ ->
-            deleteClicked(item)
+            deleteClicked(currentTemplate,item)
         }
         builder.setPositiveButton("아니오") { dialog, _ ->
             dialog.dismiss()
@@ -115,12 +119,16 @@ class BordListActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun deleteClicked(item: FireModel) = with(viewModel) {
-        delete(item)
+    private fun deleteClicked(template:String,item: FireModel) = with(viewModel) {
+        delete(template,item)
     }
 
     private fun deleteFromRoom(item: TemplateEntity) = with(viewModel) {
         deleteFromRoom(item)
+    }
+
+    private fun updateFireBase(template:String) = with(viewModel) {
+        updateModelList(template)
     }
 
 

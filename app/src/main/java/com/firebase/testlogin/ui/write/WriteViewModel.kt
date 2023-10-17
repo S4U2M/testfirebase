@@ -17,8 +17,8 @@ class WriteViewModel(
     private val roomRepo: RoomRepo
 ) : ViewModel() {
 
-    fun addItemToFireBase(title: String) = with(fireRepo) {
-        addItem(fireRepo.getUser(), title)
+    fun addItemToFireBase(template:String,title: String) = with(fireRepo) {
+        addItem(template,fireRepo.getUser(), title)
     }
 
     fun insertTemplateToRoom(title: String) = with(roomRepo) {

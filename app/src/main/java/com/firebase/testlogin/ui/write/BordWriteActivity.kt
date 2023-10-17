@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.testlogin.databinding.BordWriteActivityBinding
+import com.firebase.testlogin.unit.Unit.currentTemplate
 
 class BordWriteActivity : AppCompatActivity() {
 
@@ -37,11 +38,11 @@ class BordWriteActivity : AppCompatActivity() {
 
             when (writeType) {
                 WriteType.ADD -> {
-                    addItem(text)
+                    addItem(currentTemplate,text)
                 }
 
                 else -> {
-                    insertTemplateToRoom(text)
+                    insertTemplateToRoom(title = text)
                 }
 
             }
@@ -62,8 +63,8 @@ class BordWriteActivity : AppCompatActivity() {
 
     }
 
-    private fun addItem(title: String) = with(viewModel) {
-        addItemToFireBase(title)
+    private fun addItem(template:String,title: String) = with(viewModel) {
+        addItemToFireBase(template,title)
     }
 
     private fun insertTemplateToRoom(title: String) = with(viewModel) {

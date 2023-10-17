@@ -1,7 +1,9 @@
 package com.firebase.testlogin.ui.list
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -12,6 +14,7 @@ import com.firebase.testlogin.data.repo.firebase.FireBaseRepoImpl
 import com.firebase.testlogin.data.repo.room.RoomRepo
 import com.firebase.testlogin.data.repo.room.RoomRepoImpl
 import com.firebase.testlogin.data.room.TestDataBase
+import com.firebase.testlogin.unit.Unit.currentTemplate
 import kotlinx.coroutines.launch
 
 class ListViewModel(
@@ -19,19 +22,28 @@ class ListViewModel(
     private val roomRepo: RoomRepo
 ) : ViewModel() {
 
-    val liveModelList: LiveData<List<FireModel>> = fireRepo.getDataFromTemplate(fireRepo.getUser())
-    val liveTemplateList: LiveData<List<TemplateEntity>> = roomRepo.getAllDataFromRoom()
+    private val _liveModelList: MutableLiveData<List<FireModel>> = MutableLiveData()
+    val liveModelList: LiveData<List<FireModel>> get() = _liveModelList
+//    val liveModelList: LiveData<List<FireModel>> get() = fireRepo.getAllData(fireRepo.getUser())
+
+    val liveTemplateList: LiveData<List<TemplateEntity>> get() = roomRepo.getAllDataFromRoom()
 
 
     /**
      * 템플릿이 추가 된다면
      * addTemplate("Template1",list1)*/
-
-    fun delete(item: FireModel) {
-        fireRepo.deleteItem(fireRepo.getUser(),item)
+    fun updateModelList(template:String) {
+        val dataList = fireRepo.getDataFromTemplate(template,fireRepo.getUser())
+        _liveModelList.value = dataList.value
+        Log.d("템플릿",currentTemplate)
+        Log.d("템플릿.업데이트",dataList.value.toString())
     }
 
-    fun deleteFromRoom(item:TemplateEntity){
+    fun delete(template:String,item: FireModel) {
+        fireRepo.deleteItem(template,fireRepo.getUser(), item)
+    }
+
+    fun deleteFromRoom(item: TemplateEntity) {
         viewModelScope.launch {
             roomRepo.deleteItemFromRoom(item)
         }
