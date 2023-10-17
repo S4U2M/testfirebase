@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.firebase.testlogin.R
 import com.firebase.testlogin.databinding.MainActivityBinding
 import com.firebase.testlogin.ui.list.BordListActivity
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -76,6 +79,10 @@ class MainActivity : AppCompatActivity() {
 
                     }
                 }
+        }
+
+        homeGoggleLogin.setOnClickListener {
+
         }
     }
 
