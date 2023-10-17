@@ -1,5 +1,6 @@
 package com.firebase.testlogin.data.repo.firebase
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.firebase.testlogin.ui.Model
@@ -22,6 +23,7 @@ class FireBaseRepoImpl(
 
         val database = Firebase.database
         val myRef = database.getReference("$user/$template/title")
+        Log.d("템플릿.repo", "$user/$template/title")
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -46,6 +48,7 @@ class FireBaseRepoImpl(
                     }
 
                     resultLiveData.postValue(dataList)
+                    Log.d("템플릿.dataList", dataList.toString())
                 }
             }
 
@@ -53,8 +56,9 @@ class FireBaseRepoImpl(
                 // 데이터베이스 작업이 실패한 경우 처리
             }
         })
-
+        Log.d("템플릿.resultData", resultLiveData.value.toString())
         return resultLiveData
+
     }
 
     override fun getAllData(user: String): LiveData<List<FireModel>> {
@@ -93,7 +97,7 @@ class FireBaseRepoImpl(
                 // 데이터베이스 작업이 실패한 경우 처리
             }
         })
-
+        Log.d("템플릿.resultData", resultLiveData.value.toString())
         return resultLiveData
     }
 

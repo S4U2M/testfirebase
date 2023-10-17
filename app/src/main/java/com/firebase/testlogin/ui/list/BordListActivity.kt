@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import com.firebase.testlogin.ui.list.adapter.TemplateAdapter
 import com.firebase.testlogin.ui.write.BordWriteActivity.Companion.EXTRA_WRITE_TYPE
 import com.firebase.testlogin.ui.write.WriteType
 import com.firebase.testlogin.unit.Unit.currentTemplate
+import kotlin.math.log
 
 class BordListActivity : AppCompatActivity() {
 
@@ -96,6 +98,8 @@ class BordListActivity : AppCompatActivity() {
         with(viewModel) {
             liveModelList.observe(this@BordListActivity, Observer { newData ->
                 listAdapter.submitList(newData)
+
+                Log.d("템플릿.observe", newData.toString())
             })
 
             liveTemplateList.observe(this@BordListActivity, Observer { newData ->

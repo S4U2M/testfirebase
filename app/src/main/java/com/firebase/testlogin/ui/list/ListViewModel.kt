@@ -22,9 +22,12 @@ class ListViewModel(
     private val roomRepo: RoomRepo
 ) : ViewModel() {
 
-    private val _liveModelList: MutableLiveData<List<FireModel>> = MutableLiveData()
-    val liveModelList: LiveData<List<FireModel>> get() = _liveModelList
-//    val liveModelList: LiveData<List<FireModel>> get() = fireRepo.getAllData(fireRepo.getUser())
+    //    private val _liveModelList: MutableLiveData<List<FireModel>> = MutableLiveData()
+//    val liveModelList: LiveData<List<FireModel>> get() = _liveModelList
+    val liveModelList: LiveData<List<FireModel>>
+        get() = fireRepo.getAllData(
+            user = fireRepo.getUser()
+        )
 
     val liveTemplateList: LiveData<List<TemplateEntity>> get() = roomRepo.getAllDataFromRoom()
 
@@ -32,15 +35,18 @@ class ListViewModel(
     /**
      * 템플릿이 추가 된다면
      * addTemplate("Template1",list1)*/
-    fun updateModelList(template:String) {
-        val dataList = fireRepo.getDataFromTemplate(template,fireRepo.getUser())
-        _liveModelList.value = dataList.value
-        Log.d("템플릿",currentTemplate)
-        Log.d("템플릿.업데이트",dataList.value.toString())
+    fun updateModelList(template: String) {
+//        viewModelScope.launch {
+            val dataList = fireRepo.getDataFromTemplate(template, fireRepo.getUser())
+//            _liveModelList.value get()= dataList.value
+            Log.d("템플릿", currentTemplate)
+            Log.d("템플릿.업데이트", dataList.value.toString())
+//        }
+
     }
 
-    fun delete(template:String,item: FireModel) {
-        fireRepo.deleteItem(template,fireRepo.getUser(), item)
+    fun delete(template: String, item: FireModel) {
+        fireRepo.deleteItem(template, fireRepo.getUser(), item)
     }
 
     fun deleteFromRoom(item: TemplateEntity) {
