@@ -10,6 +10,7 @@ import com.firebase.testlogin.data.repo.firebase.FireBaseRepoImpl
 import com.firebase.testlogin.data.repo.room.RoomRepo
 import com.firebase.testlogin.data.repo.room.RoomRepoImpl
 import com.firebase.testlogin.data.room.TestDataBase
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class WriteViewModel(
@@ -44,7 +45,7 @@ class WriteViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WriteViewModel::class.java)) {
             return WriteViewModel(
-                FireBaseRepoImpl(),
+                FireBaseRepoImpl(FirebaseAuth.getInstance()),
                 RoomRepoImpl(TestDataBase.getDatabase(context))
             ) as T
         } else {

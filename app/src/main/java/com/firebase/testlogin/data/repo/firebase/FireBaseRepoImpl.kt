@@ -15,7 +15,9 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
-class FireBaseRepoImpl() : FireBaseRepo {
+class FireBaseRepoImpl(
+    private val auth: FirebaseAuth
+) : FireBaseRepo {
 
     override suspend fun getDataFromTemplate(template: String, user: String): List<FireModel> {
         val database = Firebase.database

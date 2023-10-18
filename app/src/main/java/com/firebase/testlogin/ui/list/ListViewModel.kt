@@ -15,6 +15,7 @@ import com.firebase.testlogin.data.repo.room.RoomRepo
 import com.firebase.testlogin.data.repo.room.RoomRepoImpl
 import com.firebase.testlogin.data.room.TestDataBase
 import com.firebase.testlogin.unit.Unit.currentTemplate
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class ListViewModel(
@@ -60,7 +61,9 @@ class ListViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
             return ListViewModel(
-                FireBaseRepoImpl(),
+                FireBaseRepoImpl(
+                    auth = FirebaseAuth.getInstance()
+                ),
                 RoomRepoImpl(TestDataBase.getDatabase(context))
             ) as T
         } else {

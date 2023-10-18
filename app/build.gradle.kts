@@ -53,8 +53,8 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
+//코루틴
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
 
     //room
     val room_version = "2.6.0-rc01"
